@@ -1,6 +1,7 @@
 ﻿using OpenLenovoSettings.Feature;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -57,7 +58,7 @@ namespace OpenLenovoSettings
                 var instances = new List<(IFeatureItem, FeatureAttribute)>();
                 foreach (var (feature_t, attr) in features)
                 {
-                    var instance = Activator.CreateInstance(feature_t) as IFeatureItem;
+                    var instance = FeatureHub.GetFeatureInstance(feature_t);
                     if (instance != null)
                     {
                         instances.Add((instance!, attr!));
@@ -84,7 +85,7 @@ namespace OpenLenovoSettings
                     PageType = typeof(Page),
                     Cache = true,
                 };
-                var dc = new SettingPageViewModel(catinfo.Title, features.Select(x => x.feature).ToArray());
+                var dc = new SettingPageViewModel(catinfo.Title, features);
                 //navitem.Click += (s, e) =>
                 //{
                 //    if (((NavigationItem)s).IsActive)
@@ -124,6 +125,7 @@ namespace OpenLenovoSettings
 
         private void UiWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            if (DesignerProperties.GetIsInDesignMode(this)) return;
 
             RenderCategories();
             UpdateCategoryVisibility();

@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace OpenLenovoSettings
 {
-    internal record class SettingPageViewModel(string Title, IFeatureItem[] Features);
+    internal record class SettingPageViewModel(string Title, (IFeatureItem, FeatureAttribute)[] Features);
 }

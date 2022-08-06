@@ -33,14 +33,14 @@ namespace OpenLenovoSettings.Pages
             {
                 var anysupported = false;
                 var settings = new List<object>();
-                foreach (var feature in context.Features)
+                foreach (var (feature, attr) in context.Features)
                 {
                     try
                     {
                         if (feature.IsSupported())
                         {
                             anysupported = true;
-                            var vm = new SettingViewModel(feature);
+                            var vm = new SettingViewModel(feature, attr);
                             vm.OnSettingChanged += (sender, value) =>
                             {
                                 Task.Run(() =>

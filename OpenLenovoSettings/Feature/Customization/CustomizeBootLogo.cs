@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace OpenLenovoSettings.Feature.Customization
 {
@@ -11,12 +12,22 @@ namespace OpenLenovoSettings.Feature.Customization
     {
         public override bool IsSupported()
         {
-            return true;
+            try
+            {
+                var logoinfo = BootLogo.LogoSetting.ReadLogoInfo();
+                return logoinfo.Format.HasFlag(BootLogo.LogoFormat.BMP);
+            } catch { }
+            return false;
         }
 
         public override void OnAction()
         {
-            throw new NotImplementedException();
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                var w = new BootLogoWindow();
+                w.Owner = Application.Current.MainWindow;
+                w.ShowDialog();
+            });
         }
     }
 }
