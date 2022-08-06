@@ -1,0 +1,93 @@
+﻿<UserControl x:Class="OpenLenovoSettings.SettingCard"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             xmlns:local="clr-namespace:OpenLenovoSettings"
+             xmlns:localSettings="clr-namespace:OpenLenovoSettings.Feature"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=localSettings:DesignTimeSettingViewModel, IsDesignTimeCreatable=True}"
+             d:DesignWidth="400">
+    <ContentPresenter Content="{Binding}">
+        <!-- Presentations -->
+        <ContentPresenter.Resources>
+            <DataTemplate x:Key="HeaderPresenter">
+                <TextBlock Margin="0,16,0,0"  FontSize="13" FontWeight="Medium" Text="{Binding Title}" />
+            </DataTemplate>
+            <DataTemplate x:Key="SettingPresenter">
+                <ui:CardControl Margin="0,8,0,0"  Icon="{Binding Icon}" >
+                    <ui:CardControl.Header>
+                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                            <TextBlock FontSize="13" FontWeight="Medium" Text="{Binding Title}" />
+                            <TextBlock FontSize="12" Foreground="{DynamicResource TextFillColorTertiaryBrush}" Text="{Binding Description}" Visibility="{Binding DescriptionVisibility}" />
+                        </StackPanel>
+                    </ui:CardControl.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <ui:ProgressRing Width="16" Height="16" IsIndeterminate="True" Margin="0,0,8,0" Visibility="{Binding ProgressRingVisibility}"/>
+                        <ContentPresenter Content="{Binding}">
+                        <ContentPresenter.Resources>
+                            <DataTemplate x:Key="SwitchPresenter">
+                                <ui:ToggleSwitch IsChecked="{Binding IsSwitchChecked}" IsEnabled="{Binding IsControlEnabled}"/>
+                            </DataTemplate>
+                            <DataTemplate x:Key="ComboBoxPresenter">
+                                    <ComboBox  IsEnabled="{Binding IsControlEnabled}" ItemsSource="{Binding ComboBoxItemsSource}" SelectedItem="{Binding ComboBoxSelectedItem}"/>
+                            </DataTemplate>
+
+                        </ContentPresenter.Resources>
+
+                        <ContentPresenter.Style>
+                            <Style TargetType="{x:Type ContentPresenter}">
+                                <Style.Triggers>
+
+                                    <DataTrigger Binding="{Binding IsSwitch}" Value="True">
+                                        <Setter Property="ContentTemplate" Value="{StaticResource SwitchPresenter}" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding IsComboBox}" Value="True">
+                                        <Setter Property="ContentTemplate" Value="{StaticResource ComboBoxPresenter}" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ContentPresenter.Style>
+                    </ContentPresenter>
+                    </StackPanel>
+                </ui:CardControl>
+            </DataTemplate>
+            <DataTemplate x:Key="ActionPresenter">
+                <ui:CardAction Margin="0,8,0,0"  Icon="{Binding Icon}" Click="CardAction_Click">
+                    <StackPanel>
+                        <TextBlock FontSize="13" FontWeight="Medium" Text="{Binding Title}" />
+                        <TextBlock FontSize="12" Foreground="{DynamicResource TextFillColorTertiaryBrush}" Text="{Binding Description}" Visibility="{Binding DescriptionVisibility}" />
+                    </StackPanel>
+                </ui:CardAction>
+            </DataTemplate>
+        </ContentPresenter.Resources>
+
+        <!-- Triggers -->
+        <ContentPresenter.Style>
+            <Style TargetType="{x:Type ContentPresenter}">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding IsHeader}" Value="True">
+                        <Setter Property="ContentTemplate" Value="{StaticResource HeaderPresenter}" />
+                    </DataTrigger>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding IsHeader}" Value="False" />
+                            <Condition Binding="{Binding IsAction}" Value="True" />
+                        </MultiDataTrigger.Conditions>
+                        <Setter Property="ContentTemplate" Value="{StaticResource ActionPresenter}" />
+                    </MultiDataTrigger>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding IsHeader}" Value="False" />
+                            <Condition Binding="{Binding IsAction}" Value="False" />
+                        </MultiDataTrigger.Conditions>
+                        <Setter Property="ContentTemplate" Value="{StaticResource SettingPresenter}" />
+                        <Setter Property="ContentTemplate" Value="{StaticResource SettingPresenter}" />
+                    </MultiDataTrigger>
+                </Style.Triggers>
+            </Style>
+        </ContentPresenter.Style>
+
+    </ContentPresenter>
+</UserControl>
