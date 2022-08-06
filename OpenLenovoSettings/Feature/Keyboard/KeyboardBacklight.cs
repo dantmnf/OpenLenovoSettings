@@ -34,14 +34,18 @@ namespace OpenLenovoSettings.Feature.Keyboard
 
         private static uint GetKblLevels()
         {
-            var caps = GetKBLCCapability();
-            if (caps != uint.MaxValue)
+            try
             {
-                if ((caps & 1) == 1)
+                var caps = GetKBLCCapability();
+                if (caps != uint.MaxValue)
                 {
-                    return caps >> 1;
+                    if ((caps & 1) == 1)
+                    {
+                        return caps >> 1;
+                    }
                 }
             }
+            catch { }
             return uint.MaxValue;
         }
 
