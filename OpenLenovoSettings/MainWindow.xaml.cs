@@ -85,16 +85,16 @@ namespace OpenLenovoSettings
                     Cache = true,
                 };
                 var dc = new SettingPageViewModel(catinfo.Title, features.Select(x => x.feature).ToArray());
-                navitem.Click += (s, e) =>
-                {
-                    if (((NavigationItem)s).IsActive)
-                    {
-                        e.Handled = true;
-                    }
-                };
+                //navitem.Click += (s, e) =>
+                //{
+                //    if (((NavigationItem)s).IsActive)
+                //    {
+                //        e.Handled = true;
+                //    }
+                //};
                 navitem.Activated += (s, e) =>
                 {
-                    rootNavigation.NavigateExternal(new Pages.DeviceSettingsPage(), dc);
+                    rootFrame.Navigate(new Pages.DeviceSettingsPage() { DataContext = dc });
                 };
                 rootNavigation.Items.Add(navitem);
             }
