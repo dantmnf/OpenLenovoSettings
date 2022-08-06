@@ -35,29 +35,33 @@ namespace OpenLenovoSettings.Pages
                 var settings = new List<object>();
                 foreach (var feature in context.Features)
                 {
-                    if (feature.IsSupported())
+                    try
                     {
-                        anysupported = true;
-                        var vm = new SettingViewModel(feature);
-                        vm.OnSettingChanged += (sender, value) =>
+                        if (feature.IsSupported())
                         {
-                            Task.Run(() =>
+                            anysupported = true;
+                            var vm = new SettingViewModel(feature);
+                            vm.OnSettingChanged += (sender, value) =>
                             {
-                                Dispatcher.Invoke(() =>
+                                Task.Run(() =>
                                 {
-                                    vm.IsApplyInProgress = true;
+                                    Dispatcher.Invoke(() =>
+                                    {
+                                        vm.IsApplyInProgress = true;
+                                    });
+                                    sender.SetValue(value);
+                                    Dispatcher.Invoke(() =>
+                                    {
+                                        vm.IsApplyInProgress = false;
+                                        vm.FireSettingChanged();
+                                    });
                                 });
-                                sender.SetValue(value);
-                                Dispatcher.Invoke(() =>
-                                {
-                                    vm.IsApplyInProgress = false;
-                                    vm.FireSettingChanged();
-                                });
-                            });
-                        };
+                            };
 
-                        settings.Add(vm);
+                            settings.Add(vm);
+                        }
                     }
+                    catch { }
                 }
                 if (anysupported)
                 {

@@ -110,10 +110,13 @@ namespace OpenLenovoSettings
                 var anysupported = false;
                 foreach (var (feature, attr) in category.Item2)
                 {
-                    if (feature.IsSupported())
+                    try
                     {
-                        anysupported = true;
-                    }
+                        if (feature.IsSupported())
+                        {
+                            anysupported = true;
+                        }
+                    } catch { }
                 }
                 ((NavigationItem)rootNavigation.Items[i]).Visibility = anysupported ? Visibility.Visible : Visibility.Collapsed;
             }

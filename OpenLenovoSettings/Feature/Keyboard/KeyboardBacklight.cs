@@ -63,7 +63,7 @@ namespace OpenLenovoSettings.Feature.Keyboard
             return KeyboardBacklightCapability.Unknown;
         }
 
-        public override bool IsSupported() => GetCapability() != KeyboardBacklightCapability.Unknown;
+        public override bool IsSupported() => AcpiVpcDrv.IsSupported && GetCapability() != KeyboardBacklightCapability.Unknown;
 
         public override KeyboardBacklightLevel[] GetOptions()
         {
