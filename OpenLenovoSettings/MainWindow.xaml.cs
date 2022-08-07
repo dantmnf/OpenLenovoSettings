@@ -105,6 +105,7 @@ namespace OpenLenovoSettings
         private void UpdateCategoryVisibility()
         {
             if (categories == null) RenderCategories();
+            var firstvisible = -1;
             for (int i = 0; i < categories!.Length; i++)
             {
                 var category = categories[i];
@@ -119,7 +120,24 @@ namespace OpenLenovoSettings
                         }
                     } catch { }
                 }
-                ((NavigationItem)rootNavigation.Items[i]).Visibility = anysupported ? Visibility.Visible : Visibility.Collapsed;
+                if (anysupported)
+                {
+                    if (firstvisible == -1)
+                        firstvisible = i;
+                    ((NavigationItem)rootNavigation.Items[i]).Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    ((NavigationItem)rootNavigation.Items[i]).Visibility = Visibility.Collapsed;
+
+                }
+                if ((rootNavigation.Current as NavigationItem)?.Visibility != Visibility.Visible)
+                {
+                    if (firstvisible != -1)
+                        rootNavigation.Navigate(firstvisible);
+                    else
+                        rootNavigation.NavigateExternal(new Pages.UnsupportedPage());
+                }
             }
         }
 
