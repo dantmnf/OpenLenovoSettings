@@ -72,6 +72,11 @@ namespace OpenLenovoSettings
                     catch (IOException) { }
                 }
             }
+            Stream? logoFileStream = null;
+            if (logofile != null)
+            {
+                logoFileStream = new MemoryStream(File.ReadAllBytes(logofile));
+            }
             Dispatcher.Invoke(() =>
             {
                 if (logofile != null)
@@ -79,7 +84,7 @@ namespace OpenLenovoSettings
                     defaultImageLabel.Visibility = Visibility.Collapsed;
                     var bi = new BitmapImage();
                     bi.BeginInit();
-                    bi.StreamSource = File.OpenRead(logofile);
+                    bi.StreamSource = logoFileStream;
                     bi.EndInit();
                     logoImage.Source = bi;
 
