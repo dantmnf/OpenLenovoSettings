@@ -38,8 +38,6 @@ namespace OpenLenovoSettings.Feature
 
         public static bool IsSupported()
         {
-            if (!AcpiVpcDrv.IsSupported)
-                return false;
             using var ctlr = OpenService();
             if (ctlr == null)
                 return false;
