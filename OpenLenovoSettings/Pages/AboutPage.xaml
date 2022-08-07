@@ -3,13 +3,20 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       xmlns:local="clr-namespace:OpenLenovoSettings.Pages"
       mc:Ignorable="d" 
       Style="{StaticResource UiPage}"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="AboutPage">
 
-    <DockPanel>
-        <TextBlock DockPanel.Dock="Top" Text="About" FontWeight="Medium" FontSize="18" Margin="18,0,18,18"/>
-    </DockPanel>
+    <StackPanel Margin="18,0,18,18">
+        <WrapPanel>
+            <TextBlock Text="Open Lenovo Settings" FontWeight="Medium" FontSize="18"/>
+            <TextBlock Margin="12,0,0,0" VerticalAlignment="Bottom">Development version</TextBlock>
+        </WrapPanel>
+        <TextBlock Margin="0,4,0,0">by dantmnf</TextBlock>
+        <TextBlock Margin="0,4,0,8">Distributed under the MIT license.</TextBlock>
+        <ui:Hyperlink NavigateUri="https://github.com/dantmnf/OpenLenovoSettings">Visit project page</ui:Hyperlink>
+    </StackPanel>
 </Page>
