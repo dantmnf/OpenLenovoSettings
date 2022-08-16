@@ -41,23 +41,35 @@ namespace OpenLenovoSettings.Pages
                         {
                             anysupported = true;
                             var vm = new SettingViewModel(feature, attr);
-                            vm.OnSettingChanged += (sender, value) =>
+                            if (vm.IsAction)
                             {
-                                Task.Run(() =>
+                                var handler = CustomizeHandler.CustomizeHandler.GetHandlerForFeature(feature.GetRealType());
+                                if (handler == null) continue;
+                                vm.OnSettingChanged += (sender, value) =>
                                 {
-                                    Dispatcher.Invoke(() =>
+                                    handler.Invoke();
+                                };
+                                // run action handler in current thread.
+                            }
+                            else
+                            {
+                                vm.OnSettingChanged += (sender, value) =>
+                                {
+                                    Task.Run(() =>
                                     {
-                                        vm.IsApplyInProgress = true;
+                                        Dispatcher.Invoke(() =>
+                                        {
+                                            vm.IsApplyInProgress = true;
+                                        });
+                                        sender.SetValue(value);
+                                        Dispatcher.Invoke(() =>
+                                        {
+                                            vm.IsApplyInProgress = false;
+                                            vm.FireSettingChanged();
+                                        });
                                     });
-                                    sender.SetValue(value);
-                                    Dispatcher.Invoke(() =>
-                                    {
-                                        vm.IsApplyInProgress = false;
-                                        vm.FireSettingChanged();
-                                    });
-                                });
-                            };
-
+                                };
+                            }
                             settings.Add(vm);
                         }
                     }

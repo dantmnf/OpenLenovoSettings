@@ -33,7 +33,8 @@ namespace OpenLenovoSettings
 
         private void PopulateFeaturesAndCategories()
         {
-            var featureGroups = typeof(IFeatureItem).Assembly.GetTypes()
+            var featurelib = typeof(IFeatureItem).Assembly;
+            var featureGroups = featurelib.GetTypes()
                 .Select(t => (Type: t, Attr: t.GetCustomAttributes(typeof(FeatureAttribute), false).FirstOrDefault() as FeatureAttribute))
                 .Where((t) => t.Attr != null)
                 .OrderBy(x => x.Attr!.Order).ThenBy(x => x.Attr!.Title)
@@ -45,7 +46,7 @@ namespace OpenLenovoSettings
             foreach (var (ns, features) in featureGroups)
             {
                 ICategoryInfo? catinfo = null;
-                var infotype = Type.GetType(ns + ".CategoryInfo");
+                var infotype = featurelib.GetType(ns + ".CategoryInfo");
                 if (infotype != null)
                 {
                     catinfo = Activator.CreateInstance(infotype) as ICategoryInfo;
@@ -136,7 +137,9 @@ namespace OpenLenovoSettings
                     if (firstvisible != -1)
                         rootNavigation.Navigate(firstvisible);
                     else
+                    {
                         rootNavigation.NavigateExternal(new Pages.UnsupportedPage());
+                    }
                 }
             }
         }
