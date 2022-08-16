@@ -7,8 +7,14 @@
         xmlns:local="clr-namespace:OpenLenovoSettings"
         mc:Ignorable="d"
             Background="{ui:ThemeResource ApplicationBackgroundBrush}"
-        Title="Customize boot logo" Height="300" Width="500" UseLayoutRounding="True" WindowStartupLocation="CenterOwner" ShowInTaskbar="False" Loaded="UiWindow_Loaded">
-    <Grid Margin="12">
+        Title="Customize boot logo" Height="300" Width="500" UseLayoutRounding="True" WindowStartupLocation="CenterOwner" ShowInTaskbar="False" Loaded="UiWindow_Loaded" ExtendsContentIntoTitleBar="True">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <ui:TitleBar  Title="{Binding Title, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"></ui:TitleBar>
+        <Grid Grid.Row="1" Margin="12">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
@@ -22,7 +28,6 @@
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" Text="Current logo: " VerticalAlignment="Center"/>
-            <ui:Button Grid.Column="1" Icon="Open24" Content="Pick new image..." Click="Button_Click_1"/>
 
         </Grid>
         <Image Margin="8" Grid.Row="1" Stretch="Uniform" StretchDirection="DownOnly" x:Name="logoImage" UseLayoutRounding="False" SnapsToDevicePixels="True"/>
@@ -31,12 +36,16 @@
         <TextBlock Grid.Row="3">Supported format: <Run x:Name="formats"/></TextBlock>
         <Grid Grid.Row="4" Margin="0,12,0,0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <ui:Button Grid.Column="0" Icon="ArrowReset24" Content="Reset" Click="Button_Click"/>
-            <ui:Button Grid.Column="2" Icon="Dismiss24" Content="Close" IsCancel="True"/>
+                <ui:Button Grid.Column="0" Icon="Open24" Content="Pick new image..." Click="Button_Click_1" Margin="0,0,6,0"/>
+
+                <ui:Button Grid.Column="1" Icon="ArrowReset24" Content="Reset" Click="Button_Click"/>
+            <ui:Button Grid.Column="3" Icon="Dismiss24" Content="Close" IsCancel="True"/>
         </Grid>
+    </Grid>
     </Grid>
 </ui:UiWindow>
