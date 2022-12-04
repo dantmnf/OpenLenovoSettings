@@ -33,4 +33,5 @@ It is recommended to uninstall Lenovo Vantage and disable/uninstall Lenovo Syste
 
 * [Lenovo Controller](https://github.com/ViRb3/LenovoController)
 * [Lenovo Legion Toolkit](https://github.com/BartoszCichecki/LenovoLegionToolkit)
+* [LogoDIY](https://github.com/Coxxs/LogoDiy)
 * App icon by <a href="https://www.flaticon.com/free-icons/business-and-finance" title="business and finance icons">manshagraphics on Flaticon</a>

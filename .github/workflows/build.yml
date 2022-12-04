@@ -1,0 +1,44 @@
+name: Release
+
+on:
+  push:
+    branches: [ 'master' ]
+    tags: '*'
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: windows-2022
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+    - name: Set env
+      shell: bash
+      run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+    - name: Build
+      shell: cmd
+      run: |
+        dotnet restore
+        dotnet publish -c Release --no-self-contained -p:PublishSingleFile=true OpenLenovoSettings
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: bin
+        path: OpenLenovoSettings/bin/Release/net6.0-windows/win-x64
+    - name: pack release
+      shell: cmd
+      if: startsWith(github.ref, 'refs/tags/')
+      run:
+        tar caf OpenLenovoSettings-%GITHUB_REF_NAME%.zip LICENSE README.md -C OpenLenovoSettings\bin\Release\net6.0-windows\win-x64\publish OpenLenovoSettings.exe 
+    - name: Release
+      uses: softprops/action-gh-release@v0.1.13
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        files: OpenLenovoSettings-${{ github.ref_name }}.zip
+        fail_on_unmatched_files: true
