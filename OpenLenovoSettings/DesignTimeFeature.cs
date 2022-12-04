@@ -15,7 +15,7 @@ namespace OpenLenovoSettings
 
         public object? GetValue() => Visibility.Visible;
 
-        public Type GetValueType() => typeof(Action);
+        public Type GetValueType() => typeof(Visibility);
 
         public bool IsSupported() => true;
 

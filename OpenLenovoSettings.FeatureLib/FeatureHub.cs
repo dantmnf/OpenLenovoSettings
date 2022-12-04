@@ -42,7 +42,21 @@ namespace OpenLenovoSettings
 
         public static IFeatureItem GetFeatureInstance(Type t)
         {
-            return _features.GetOrAdd(t, (t) => new CacheSupportedFeatureProxy((IFeatureItem)Activator.CreateInstance(t)!));
+            return _features.GetOrAdd(t, (t) => {
+                if (t.IsAssignableTo(typeof(IFeatureItem)))
+                {
+                    return new CacheSupportedFeatureProxy((IFeatureItem)Activator.CreateInstance(t)!);
+                }
+                throw new KeyNotFoundException();
+            });
+        }
+
+        public static IFeatureItem GetFeatureInstance(string fullname)
+        {
+            var t = Type.GetType(fullname);
+            if (t == null) throw new TypeLoadException();
+            return GetFeatureInstance(t);
+
         }
 
         public static void RequestReloadFeatures()
