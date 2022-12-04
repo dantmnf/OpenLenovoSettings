@@ -182,6 +182,18 @@ namespace OpenLenovoSettings.BootLogo
             var info = ReadLogoInfo();
             info.Enabled = 0;
             WriteLogoInfo(info);
+            if (EfiVolume != null)
+            {
+                var logodir = Path.Combine(EfiVolume, "EFI", "Lenovo", "Logo");
+                var prefix = Path.Combine(logodir, $"mylogo_{info.Width}x{info.Height}");
+                try
+                {
+                    File.Delete(prefix + ".bmp");
+                    File.Delete(prefix + ".png");
+                    File.Delete(prefix + ".jpg");
+                }
+                catch (IOException) { }
+            }
         }
 
         public static void SetLogoFile(string filename)
@@ -220,7 +232,7 @@ namespace OpenLenovoSettings.BootLogo
                 Directory.CreateDirectory(logodir);
                 if (needConvert)
                 {
-                    using var fs = File.OpenWrite(logofile);
+                    using var fs = File.Open(logofile, FileMode.Create);
                     bmp.Save(fs, ImageFormat.Bmp);
                 }
                 else
