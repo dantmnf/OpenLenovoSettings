@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OpenLenovoSettings.Feature.Performance
 {
-    [Feature(Title = "Performance mode (ACPI VPC)", Icon = "Gauge24", Order = 0)]
+    [Feature(Title = "Performance mode (ACPI VPC)", Icon = "Gauge24", Order = 0, Volatile = true)]
     public class PerformanceModeAcpiVpc : EnumFeature<ITSMode>
     {
         private static uint BuildDytcCommand(ushort a1, byte a2, byte a3, byte a4)

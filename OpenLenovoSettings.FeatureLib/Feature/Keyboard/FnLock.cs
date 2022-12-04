@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OpenLenovoSettings.Feature.Keyboard
 {
-    [Feature(Title = "Fn lock", Icon = "KeyboardShiftUppercase24")]
+    [Feature(Title = "Fn lock", Icon = "KeyboardShiftUppercase24", Order = 0)]
     public class FnLock : BaseAcpiVpcCommandMaskFeature
     {
         public FnLock() : base(0x831020E8, 2, 0x200, 0x400, 14, 15) { }

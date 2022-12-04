@@ -16,7 +16,7 @@ namespace OpenLenovoSettings.Feature.PowerBattery
         Conservation,
         Express,
     }
-    [Feature(Title = "Charging mode", Icon = "BatteryCharge24", Order = 0)]
+    [Feature(Title = "Charging mode", Icon = "BatteryCharge24", Order = 0, Volatile = true)]
     public class ChargingMode : EnumFeature<ChargingModeValue>
     {
         [Flags]

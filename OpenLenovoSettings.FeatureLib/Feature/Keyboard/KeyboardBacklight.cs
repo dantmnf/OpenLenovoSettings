@@ -15,7 +15,7 @@ namespace OpenLenovoSettings.Feature.Keyboard
         Level2,
         Auto
     }
-    [Feature(Title = "Keyboard backlight", Icon = "Keyboard24")]
+    [Feature(Title = "Keyboard backlight", Icon = "Keyboard24", Order = 2, Volatile = true)]
     public class KeyboardBacklight : EnumFeature<KeyboardBacklightLevel>
     {
         private enum KeyboardBacklightCapability

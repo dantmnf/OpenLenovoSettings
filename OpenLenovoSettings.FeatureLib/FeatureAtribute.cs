@@ -14,5 +14,6 @@ namespace OpenLenovoSettings
         public string? Description { get; set; }
         public int Order { get; set; } = 0;
         public string? Icon { get; set; }
+        public bool Volatile { get; set; } = false;
     }
 }
