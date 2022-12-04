@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -115,19 +115,10 @@ namespace OpenLenovoSettings
             var dlg = new OpenFileDialog();
             var filters = new List<string>();
             var info = LogoSetting.ReadLogoInfo();
-            if (info.Format.HasFlag(LogoFormat.BMP))
-            {
-                filters.Add("*.bmp");
-            }
-            if (info.Format.HasFlag(LogoFormat.PNG))
-            {
-                filters.Add("*.bmp");
-            }
-            if (info.Format.HasFlag(LogoFormat.JPG))
-            {
-                filters.Add("*.jpg");
-                filters.Add("*.jpeg");
-            }
+            filters.Add("*.bmp");
+            filters.Add("*.png");
+            filters.Add("*.jpg");
+            filters.Add("*.jpeg");
             dlg.Filter = string.Join(", ", filters) + "|" + string.Join(";", filters);
             if (dlg.ShowDialog(this).GetValueOrDefault())
             {
