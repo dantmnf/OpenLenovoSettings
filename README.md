@@ -29,6 +29,10 @@ It is recommended to uninstall Lenovo Vantage and disable/uninstall Lenovo Syste
 
 \* For settings that will lost after reboot or abnormal shutdown, an extra "apply on startup" option is available.
 
+## But I'm using Linux!
+
+Check `/sys/bus/platform/drivers/ideapad_acpi/VPC2004:00`, `/sys/firmware/acpi/platform_profile_choices` and `/sys/firmware/acpi/platform_profile`.
+
 ## Credits
 
 * [Lenovo Controller](https://github.com/ViRb3/LenovoController)
