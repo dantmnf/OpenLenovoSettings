@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <RootNamespace>OpenLenovoSettings</RootNamespace>
+    <Version>1.0.0</Version>
   </PropertyGroup>
 
 	<ItemGroup>
